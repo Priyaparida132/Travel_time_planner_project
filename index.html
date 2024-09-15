@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travelling Titans - Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        .travel-info {
+            flex: 2;
+            background-image: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxMTc3M3wwfDF8c2VhcmNofDF8fHRyYXZlbGV8ZW58MHx8fHwxNjg2MjE4NDg0&ixlib=rb-4.0.3&q=80&w=1080');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .travel-info h1 {
+            font-size: 48px;
+            font-family: 'Pacifico', cursive;
+            margin-bottom: 20px;
+        }
+        .travel-info p {
+            font-size: 24px;
+        }
+        .login-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        .switch-button {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .switch-button button {
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .switch-button button:hover {
+            background-color: #ff6b5b;
+        }
+        .login-section input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .login-section button {
+            width: 100%;
+            padding: 10px;
+            background-color: #ff7e5f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .login-section button:hover {
+            background-color: #ff6b5b;
+        }
+        nav {
+            background-color: #ff7e5f;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="web2.html">Destinations</a></li>
+            <li><a href="web3.html">Booking</a></li>
+            <li><a href="web4.html">Nearby Places</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="travel-info">
+            <h1>Discover the World with Travelling Titans</h1>
+            <p>Experience the best travel destinations in India.</p>
+        </div>
+        <div class="login-container">
+            <div class="login-box">
+                <div class="switch-button">
+                    <button id="userLoginBtn">User Login</button>
+                    <button id="adminLoginBtn">Admin Login</button>
+                </div>
+                <div class="login-section" id="userLoginSection">
+                    <h2>User Login</h2>
+                    <input type="text" id="name" placeholder="Enter your name" required>
+                    <input type="number" id="mobile" placeholder="Enter your mobile number" required>
+                    <input type="number" id="aadhar" placeholder="Enter your Aadhar number" required>
+                    <button id="generateOtpBtn">Generate OTP</button>
+                    <input type="text" id="otp" placeholder="Enter OTP" style="display: none;">
+                    <button id="verifyOtpBtn" style="display: none;">Verify OTP</button>
+                    <div id="message"></div>
+                </div>
+                <div class="login-section" id="adminLoginSection" style="display: none;">
+                    <h2>Admin Login</h2>
+                    <input type="text" id="adminId" placeholder="Enter admin ID" required>
+                    <input type="password" id="adminPassword" placeholder="Enter password" required>
+                    <button id="adminLoginSubmitBtn">Login</button>
+                    <div id="adminMessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Switch between user and admin login sections
+        document.getElementById('userLoginBtn').addEventListener('click', function() {
+            document.getElementById('userLoginSection').style.display = 'block';
+            document.getElementById('adminLoginSection').style.display = 'none';
+        });
+
+        document.getElementById('adminLoginBtn').addEventListener('click', function() {
+            document.getElementById('userLoginSection').style.display = 'none';
+            document.getElementById('adminLoginSection').style.display = 'block';
+        });
+
+        // User login functionality
+        document.getElementById('generateOtpBtn').addEventListener('click', function() {
+            const otp = Math.floor(1000 + Math.random() * 9000);
+            localStorage.setItem('otp', otp);
+            document.getElementById('otp').style.display = 'block';
+            document.getElementById('verifyOtpBtn').style.display = 'block';
+            document.getElementById('message').textContent = 'OTP generated. Check console for OTP.';
+            console.log('Generated OTP:', otp);
+        });
+
+        document.getElementById('verifyOtpBtn').addEventListener('click', function() {
+            const enteredOtp = document.getElementById('otp').value;
+            const generatedOtp = localStorage.getItem('otp');
+            const name = document.getElementById('name').value;
+            const mobile = document.getElementById('mobile').value;
+            const aadhar = document.getElementById('aadhar').value;
+
+            if (enteredOtp == generatedOtp) {
+                document.getElementById('message').textContent = 'OTP verified. Login successful!';
+                // Store user details in local storage
+                const userDetails = {
+                    name: name,
+                    mobile: mobile,
+                    aadhar: aadhar,
+                    loginTime: new Date().toLocaleString()
+                };
+
+                let userLogins = JSON.parse(localStorage.getItem('userLogins')) || [];
+                userLogins.push(userDetails);
+                localStorage.setItem('userLogins', JSON.stringify(userLogins));
+
+                window.location.href = 'web2.html'; // Redirect to destinations page
+            } else {
+                document.getElementById('message').textContent = 'Invalid OTP. Please try again.';
+            }
+        });
+
+        // Admin login functionality
+        document.getElementById('adminLoginSubmitBtn').addEventListener('click', function() {
+            const adminId = document.getElementById('adminId').value;
+            const adminPassword = document.getElementById('adminPassword').value;
+
+            // Hardcoded admin credentials
+            const validAdminId = 'rishi';
+            const validAdminPassword = '123';
+
+            if (adminId === validAdminId && adminPassword === validAdminPassword) {
+                document.getElementById('adminMessage').textContent = 'Admin login successful!';
+                window.location.href = 'admin.html'; // Redirect to admin page
+            } else {
+                document.getElementById('adminMessage').textContent = 'Invalid Admin ID or Password.';
+            }
+        });
+    </script>
+</body>
+</html>

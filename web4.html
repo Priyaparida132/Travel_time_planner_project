@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nearby Places</title>
+    <style>body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 50px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            background: linear-gradient(45deg, #ff9966, #ff5e62, #ff5e62, #ff9966);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+        }
+
+        @keyframes gradientBackground {
+            0% {
+                background-position: 0% 0%;
+            }
+            50% {
+                background-position: 100% 100%;
+            }
+            100% {
+                background-position: 0% 0%;
+            }
+        }
+
+    .place-box {
+        background: linear-gradient(to bottom, #ffffff, #f1f1f1);
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        padding: 40px;
+        width: 400px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        text-align: center;
+        border: 2px solid #e0e0e0;
+    }
+
+    .place-box:hover {
+        transform: translateY(-15px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .place-image {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
+
+    .place-box h2 {
+        margin: 0 0 20px;
+        font-size: 2em;
+        color: #333;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+    .place-box p {
+        margin: 0;
+        color: #555;
+        font-size: 1.1em;
+        line-height: 1;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .place-box {
+        animation: fadeIn 0.8s ease-in-out;
+    }
+    </style>
+</head>
+<body>
+    <script>
+        // Predefined nearby places data
+        const nearbyPlaces = {
+            'Kedarnath, where the serene Himalayas embrace the divine presence of Lord Shiva': [
+            
+                {
+                    name: 'Tungnath Temple',
+                    description: 'The highest Shiva temple in the world, offering stunning Himalayan views.',
+                    image: 'https://media.istockphoto.com/id/477104250/photo/tungnath-shiva-temple-on-a-clouds-background.jpg?s=612x612&w=0&k=20&c=591ezJY0XIrRxjPjcijdyCkz75bZCqBd1pQNYvwl16c='
+                },
+                {
+                   name: 'Haridwar',
+                    description: 'A major pilgrimage city known for its ghats on the Ganges River and vibrant spiritual atmosphere.',
+                    image: 'https://www.tripsavvy.com/thmb/UnFTsNbJOS_r8BOZGnmwjwRwLn4=/2124x1411/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-458731819-e2afa10fe59d4fd5b3e4b6825760b744.jpg'
+                },
+                {
+                   name: 'Rishikesh',
+                    description: 'A renowned spiritual hub famous for its yoga retreats, the Ganges River, and vibrant cultural atmosphere.',
+                    image: 'https://th.bing.com/th/id/OIP.rslrFvIaEpDN137YeUZUZAHaE9?rs=1&pid=ImgDetMain'
+                },
+                {
+                    name: 'Valley of Flowers',
+                    description: 'A UNESCO World Heritage Site known for its diverse and colorful array of alpine flowers.',
+                    image: 'https://th.bing.com/th/id/OIP.0KoCNvbHb0H_0xxw9cS5mAHaEB?rs=1&pid=ImgDetMain'
+                }
+            ],
+
+            ' Goa, where every sunset is a new beginning!': [
+            {
+                    name: 'Dudhsagar Waterfalls',
+                    description: 'One of India’s tallest waterfalls, surrounded by lush forests.',
+                    image: 'https://th.bing.com/th/id/R.10a922f3c82aa33b877127c6de6bfe3c?rik=ZND1U16Pia7t%2fw&riu=http%3a%2f%2fwww.osrvacation.com%2fwp-content%2fuploads%2f2020%2f06%2fdudhsagar.jpeg&ehk=6eVDM%2b%2faUXYxWYIgeidSOp8fEEAPBoaXBg%2fPdkhrMcU%3d&risl=&pid=ImgRaw&r=0'
+                },
+                {
+                    name: 'Baga Beach',
+                    description: 'A lively beach famous for its energetic nightlife, water sports, and beach shacks.',
+                    image: 'https://static2.tripoto.com/media/transfer/img/OgData/1509257007_istock_000026994380xlarge_fotor.jpg'
+                },
+                {
+                    name: 'Mangeshi Temple',
+                    description: 'A revered Hindu temple dedicated to Lord Shiva, known for its serene atmosphere and beautiful architecture.',
+                    image: 'https://www.dealsshutter.com/blog/wp-content/uploads/2020/10/things-to-do-in-north-goa-1024x682.jpg'
+                },
+                
+                {
+                    name: 'Palolem Beach',
+                    description: 'A picturesque beach known for its calm waters, vibrant nightlife, and unique crescent shape.',
+                    image: 'https://1.bp.blogspot.com/-nxIHsF8lbzc/Xt9G8iZraWI/AAAAAAAABSQ/pMGiMhNSWY0ARD-d14Zkw6q73k120MNMACNcBGAsYHQ/s1600/goa.jpg'
+                }
+            ],
+            'Jaipur: Where history meets vibrant hues and royal charm!': [
+            {
+        name: 'Amber Fort',
+        description: 'A majestic fort perched on a hill, Amber Fort boasts stunning architecture with intricate carvings, expansive courtyards, and panoramic views of the surrounding landscape.',
+        image: 'https://wallpaperaccess.com/full/8548945.jpg'
+    },
+    {
+        name: 'City Palace',
+        description: 'A regal residence that showcases a blend of Rajasthani and Mughal architecture, City Palace features lavish courtyards, ornate rooms, and fascinating museums.',
+        image: 'https://thumbs.dreamstime.com/b/mysore-palace-historical-royal-residence-indian-state-karnataka-official-wadiyar-dynasty-seat-kingdom-133022488.jpg'
+    },
+    {
+        name: 'Hawa Mahal',
+        description: 'Known as the "Palace of Winds," Hawa Mahal is an iconic pink sandstone building with a stunning façade of intricate lattice work, designed for royal women to observe street life from behind its windows.',
+        image: 'https://www.holidify.com/images/compressed/attractions/attr_1538.jpg'
+    },
+    {
+        name: 'Jantar Mantar',
+        description: 'An astronomical marvel, Jantar Mantar features a collection of monumental instruments used for tracking celestial events, showcasing the scientific genius of ancient India.',
+        image: 'https://assets.traveltriangle.com/blog/wp-content/uploads/2018/01/shutterstock_89543659.jpg'
+    }
+            ],
+            // Add more destinations and their nearby places here
+         ' Puri: Discover the magic of Jagannath and the beauty of our shores!': [
+         {
+        name: 'Konark Sun Temple',
+        description: 'A UNESCO World Heritage Site, this architectural marvel is renowned for its intricate carvings and the chariot-shaped structure dedicated to the Sun God.',
+        image: 'https://th.bing.com/th/id/OIP.vpwgqAHmzfEt3fqOenYp8gHaEK?rs=1&pid=ImgDetMain'
+    },
+    {
+        name: 'Chilika Lake',
+        description: 'Asia’s largest brackish water lagoon, Chilika Lake is a paradise for bird watchers and nature lovers, offering breathtaking views and serene boat rides.',
+        image: 'https://th.bing.com/th/id/R.1a7e82930d9958a03d890a28408d7685?rik=oeaeCxoclVoL0Q&riu=http%3a%2f%2fpratisrutiplus.com%2fwp-content%2fuploads%2f2017%2f06%2fchilika.jpg&ehk=ptr2EaR2MGTvGU8ZIeQI9EFxA4QTge2e8h1MDs%2beipk%3d&risl=&pid=ImgRaw&r=0'
+    },
+    {
+        name: 'Raghurajpur Heritage Village',
+        description: 'A charming village where every house is an artist’s studio, famous for its Pattachitra paintings and traditional crafts, showcasing Odisha’s rich cultural heritage.',
+        image: 'https://1.bp.blogspot.com/-t6BL--8ZFAU/XtqWSubsodI/AAAAAAAACVg/0ce2jW9Q5eoKTqps-NOXK8Z9c9JXp_ZRACK4BGAsYHg/s1024/A-kettle-elegantly-painted-using-Odisha%2527-traditional-art-forms..jpg'
+    },
+    {
+        name: 'Pipili',
+        description: 'A vibrant town known for its exquisite appliqué work, where colorful fabric pieces come together to create intricate designs, perfect for souvenirs and gifts.',
+        image: 'https://th.bing.com/th/id/OIP.TGTo3FjoaR2KD1s6gu-roAHaE8?rs=1&pid=ImgDetMain'
+    }
+],    // Add more destinations and their nearby places here
+         ' Kerala: Dive into paradise where lush landscapes and tranquil backwaters await': [
+         {
+        name: 'Munnar',
+        description: 'A hill station blanketed in emerald-green tea plantations, Munnar is a tranquil retreat with mist-covered hills, breathtaking valleys, and exotic wildlife.',
+        image: 'https://wallpapercave.com/wp/wp6733707.jpg'
+    },
+    {
+        name: 'Alleppey (Alappuzha)',
+        description: 'Known as the "Venice of the East," Alleppey is famous for its serene backwaters, charming houseboats, and scenic beauty, offering a peaceful escape into nature.',
+        image: 'https://wallpapercave.com/wp/wp7877450.jpg'
+    },
+    {
+        name: 'Thekkady',
+        description: 'Home to the Periyar Wildlife Sanctuary, Thekkady offers a thrilling experience with its lush forests, tranquil lakes, and the chance to spot majestic elephants in the wild.',
+        image: 'https://wallpapercave.com/wp/wp11428553.jpg'
+    },
+    {
+        name: 'Wayanad',
+        description: 'A land of lush forests, cascading waterfalls, and ancient caves, Wayanad is a perfect blend of adventure and serenity, offering endless opportunities to explore nature’s wonders.',
+        image:'https://i.pinimg.com/originals/1e/28/f3/1e28f3cbd9e810594f1583fbe011cf18.jpg'
+    }
+],
+            
+        }
+    
+        
+        // Function to retrieve query parameters
+function getQueryParameter(name) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(name);
+}
+
+// Display nearby places based on the selected destination
+function displayNearbyPlaces() {
+    const destination = getQueryParameter('destination');
+    if (destination) {
+        createPlaceBoxes(destination);
+    } else {
+        // Handle case where no destination is provided or invalid destination
+        document.body.innerHTML = '<p>No destination selected.</p>';
+    }
+}
+
+        // Function to create place boxes with images
+        function createPlaceBoxes(destination) {
+            const places = nearbyPlaces[destination];
+
+            if (places) {
+                places.forEach(place => {
+                    const placeBox = document.createElement('div');
+                    placeBox.className = 'place-box';
+                    
+                    const image = document.createElement('img');
+                    image.src = place.image;
+                    image.alt = place.name;
+                    image.className = 'place-image';
+                    
+                    const title = document.createElement('h2');
+                    title.textContent = place.name;
+                    
+                    const description = document.createElement('p');
+                    description.textContent = place.description;
+                    
+                    placeBox.appendChild(image);
+                    placeBox.appendChild(title);
+                    placeBox.appendChild(description);
+                    
+                    document.body.appendChild(placeBox);
+                });
+            }
+        }
+
+        displayNearbyPlaces();
+    </script>
+</body>
+</html>
